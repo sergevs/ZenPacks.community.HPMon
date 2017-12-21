@@ -79,10 +79,10 @@ class HPSm2CntlrMap(HPExpansionCardMap):
                     '%s (%s)'%(self.models[1], getattr(om, 'setProductKey', 1)))
                 om.setProductKey = MultiArgs(model, model.split()[0])
                 for nic in tabledata.get('cpqSm2NicConfigTable', {}).values():
-                    om.macaddress = self.asmac(getattr(nic, 'macaddress', ''))
-                    om.ipaddress = getattr(nic, 'ipaddress', '')
-                    om.subnetmask = getattr(nic, 'subnetmask', '')
-                    om.dnsName = getattr(nic, 'dnsName', '')
+                    om.macaddress = self.asmac(nic.get( 'macaddress', ''))
+                    om.ipaddress = nic.get('ipaddress', '')
+                    om.subnetmask = nic.get('subnetmask', '')
+                    om.dnsName = nic.get('dnsName', '')
             except AttributeError:
                 continue
             HPExpansionCardMap.oms[device.id].append(om)
